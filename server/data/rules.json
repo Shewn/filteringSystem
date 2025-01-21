@@ -1,0 +1,22 @@
+{
+  "data": [
+    {
+      "rule_id": 2,
+      "field": "price",
+      "operator": "<",
+      "value": 150
+    },
+    {
+      "rule_id": 3,
+      "field": "counterparty",
+      "operator": "equals",
+      "value": "Bank A"
+    },
+    {
+      "rule_id": 4,
+      "field": "price",
+      "operator": "between",
+      "value": [40, 200]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+<div class="list-container">
+  <p-table
+    [value]="trades"
+    [tableStyle]="{ 'max-width': '50rem', margin: 'auto' }"
+    showGridlines
+  >
+    <ng-template #header>
+      <tr>
+        <th>Trade Number</th>
+        <th>Portfolio</th>
+        <th>Counter Party</th>
+        <th>Price</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-trade>
+      <tr>
+        <td>{{ trade.trade_number }}</td>
+        <td>{{ trade.portfolio }}</td>
+        <td>{{ trade.counterparty }}</td>
+        <td>{{ trade.price }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
