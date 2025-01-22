@@ -93,6 +93,7 @@ export const modifyRule = (
       message: `Rule with ID ${ruleId} not found.`,
     };
   }
+  updatedRule.rule_id = ruleId;
   rules[ruleIndex] = { ...rules[ruleIndex], ...updatedRule };
 
   const updatedRules = JSON.stringify({ data: rules }, null, 2);
@@ -114,7 +115,9 @@ export const modifyRule = (
   };
 };
 
+// Get rule by id
 export const getRuleById = (ruleId: number): Response => {
+  reloadData();
   const ruleIndex = rules.findIndex((rule) => rule.rule_id === ruleId);
   if (ruleIndex === -1) {
     return {
@@ -130,6 +133,7 @@ export const getRuleById = (ruleId: number): Response => {
   };
 };
 
+// Get all rules
 export const getRules = (): Response => {
   reloadData();
   if (rules.length === 0) {

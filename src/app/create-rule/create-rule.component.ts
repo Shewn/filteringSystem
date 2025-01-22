@@ -13,6 +13,7 @@ import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { processInput } from '../util/util';
 
 @Component({
   selector: 'app-create-rule',
@@ -62,42 +63,6 @@ export class CreateRuleComponent {
     }
   }
 
-  processInput(
-    formValue: Partial<{
-      selectedField: string | null;
-      price: number | null;
-      selectedRule: string | null;
-      fieldValue: string | null;
-    }>
-  ) {
-    function getKeyMap(field: any) {
-      const fieldMap = new Map([
-        ['Trade number', 'trade_number'],
-        ['Portfolio', 'portfolio'],
-        ['Counterparty', 'counterparty'],
-        ['Price', 'price'],
-      ]);
-      return fieldMap.get(field);
-    }
-
-    function getOperator(selectedOperator: any) {
-      const operatorMap = new Map([
-        ['>', '>'],
-        ['<', '<'],
-        ['equal', 'equals'],
-        ['not equal', 'not_equals'],
-        ['in between', 'between'],
-      ]);
-      return operatorMap.get(selectedOperator);
-    }
-    return {
-      rule_id: 1,
-      field: getKeyMap(formValue.selectedField),
-      operator: getOperator(formValue.selectedRule),
-      value: formValue.fieldValue || formValue.price,
-    };
-  }
-
   onSubmit() {
     if (this.showPriceField) {
       this.newFormGroup.value.fieldValue = null;
@@ -107,7 +72,7 @@ export class CreateRuleComponent {
     this.http
       .post<any>(
         'http://localhost:3000/api/rules',
-        this.processInput(this.newFormGroup.value)
+        processInput(this.newFormGroup.value)
       )
       .subscribe((response) => {
         console.log('Response:', response);
