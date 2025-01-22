@@ -65,10 +65,8 @@ export class ViewRulesComponent {
       accept: () => {
         this.http
           .delete<ResponseData>(`http://localhost:3000/api/rules/${ruleId}`)
-          .subscribe((result) => {
-            // process the configuration.
-            console.warn(result);
-
+          .subscribe(() => {
+            this.rules = [];
             this.messageService.add({
               severity: 'info',
               summary: 'Confirmed',
@@ -81,8 +79,9 @@ export class ViewRulesComponent {
                 // process the configuration.
                 if (result && result.rules) {
                   this.rules = result.rules;
+                } else {
+                  this.rules = [];
                 }
-                this.rules = [];
               });
           });
       },

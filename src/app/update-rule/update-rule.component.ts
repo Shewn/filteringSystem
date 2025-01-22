@@ -15,7 +15,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { processInput } from '../util/util';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export type ResponseData = {
   success: boolean;
@@ -63,11 +63,10 @@ export class UpdateRuleComponent {
     ['<', '<'],
     ['equals', 'equal'],
     ['not_equals', 'not equal'],
-    ['between', 'in between'],
   ]);
 
   showPriceField: boolean = false;
-  rulesOptionWithPrice = ['>', '<', 'equal', 'not equal', 'in between'];
+  rulesOptionWithPrice = ['>', '<', 'equal', 'not equal'];
   rulesOptionWithoutPrice = ['equal', 'not equal'];
   rulesOption: string[] = this.rulesOptionWithoutPrice;
   newFormGroup: FormGroup = new FormGroup({
@@ -76,7 +75,7 @@ export class UpdateRuleComponent {
     selectedRule: new FormControl(''),
     fieldValue: new FormControl(''),
   });
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     // This service can now make HTTP requests via `this.http`.
   }
 
@@ -134,5 +133,7 @@ export class UpdateRuleComponent {
       .subscribe((response) => {
         console.log('Response:', response);
       });
+
+    this.router.navigate(['/rules']);
   }
 }

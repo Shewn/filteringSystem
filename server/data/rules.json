@@ -1,16 +1,10 @@
 {
   "data": [
     {
-      "rule_id": 1,
+      "rule_id": 2,
       "field": "trade_number",
       "operator": "not_equals",
-      "value": "1004"
-    },
-    {
-      "rule_id": 2,
-      "field": "counterparty",
-      "operator": "equals",
-      "value": "ABC Bank"
+      "value": "1002"
     }
   ]
 }

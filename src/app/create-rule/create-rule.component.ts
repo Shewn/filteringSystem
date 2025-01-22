@@ -14,6 +14,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { processInput } from '../util/util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-rule',
@@ -39,7 +40,7 @@ export class CreateRuleComponent {
     'Price',
   ];
   showPriceField: boolean = false;
-  rulesOptionWithPrice = ['>', '<', 'equal', 'not equal', 'in between'];
+  rulesOptionWithPrice = ['>', '<', 'equal', 'not equal'];
   rulesOptionWithoutPrice = ['equal', 'not equal'];
   rulesOption: string[] = this.rulesOptionWithoutPrice;
   newFormGroup = new FormGroup({
@@ -49,7 +50,7 @@ export class CreateRuleComponent {
     fieldValue: new FormControl(''),
   });
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     // This service can now make HTTP requests via `this.http`.
   }
 
@@ -77,5 +78,7 @@ export class CreateRuleComponent {
       .subscribe((response) => {
         console.log('Response:', response);
       });
+
+    this.router.navigate(['/rules']);
   }
 }
