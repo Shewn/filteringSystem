@@ -4,7 +4,7 @@
       "rule_id": 1,
       "field": "price",
       "operator": "<",
-      "value": 150
+      "value": 200000
     },
     {
       "rule_id": 2,

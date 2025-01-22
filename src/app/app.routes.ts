@@ -8,7 +8,7 @@ import { ViewRulesComponent } from './view-rules/view-rules.component';
 export const routes: Routes = [
   { path: 'create', component: CreateRuleComponent },
   { path: 'view', component: ListDataComponent },
-  { path: 'update', component: UpdateRuleComponent },
-  { path: 'remove', component: RemoveRuleComponent },
+  { path: 'update/:id', component: UpdateRuleComponent },
+  { path: 'remove/:id', component: RemoveRuleComponent },
   { path: 'rules', component: ViewRulesComponent },
 ];

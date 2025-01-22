@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Rule } from '../../../schema';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -15,6 +15,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { processInput } from '../util/util';
+import { ActivatedRoute } from '@angular/router';
 
 export type ResponseData = {
   success: boolean;
@@ -39,6 +40,8 @@ export type ResponseData = {
   styleUrl: './update-rule.component.css',
 })
 export class UpdateRuleComponent {
+  private readonly route = inject(ActivatedRoute);
+
   rule: Partial<Rule> = {};
   ruleId: WritableSignal<number> = signal(0);
   fieldOption: string[] = [
@@ -67,7 +70,12 @@ export class UpdateRuleComponent {
   rulesOptionWithPrice = ['>', '<', 'equal', 'not equal', 'in between'];
   rulesOptionWithoutPrice = ['equal', 'not equal'];
   rulesOption: string[] = this.rulesOptionWithoutPrice;
-  newFormGroup: FormGroup = new FormGroup({});
+  newFormGroup: FormGroup = new FormGroup({
+    selectedField: new FormControl(''),
+    price: new FormControl(0),
+    selectedRule: new FormControl(''),
+    fieldValue: new FormControl(''),
+  });
   constructor(private http: HttpClient) {
     // This service can now make HTTP requests via `this.http`.
   }
@@ -77,26 +85,28 @@ export class UpdateRuleComponent {
   }
 
   ngOnInit() {
+    const ruleIdFromParam = this.route.snapshot.paramMap.get('id');
     this.http
-      .get<ResponseData>('http://localhost:3000/api/trades')
+      .get<ResponseData>(`http://localhost:3000/api/rule/${ruleIdFromParam}`)
       .subscribe((result) => {
         // process the configuration.
         const { rules } = result;
         this.rule = rules[0] || [];
         this.ruleId.set(this.rule.rule_id || 0);
-        this.newFormGroup = new FormGroup({
-          selectedField: new FormControl(
-            this.fieldReverseMap.get(this.rule.field || 'trade_number')
+        this.showPriceField = this.isPriceField(this.rule.field);
+        this.rulesOption = this.isPriceField(this.rule.field)
+          ? this.rulesOptionWithPrice
+          : this.rulesOptionWithoutPrice;
+
+        this.newFormGroup.patchValue({
+          selectedField: this.fieldReverseMap.get(
+            this.rule.field || 'trade_number'
           ),
-          price: new FormControl(
-            this.isPriceField(this.rule.field) ? this.rule.value : 0
-          ),
-          selectedRule: new FormControl(
-            this.operatorReverseMap.get(this.rule.operator || '>')
-          ),
-          fieldValue: new FormControl(
-            !this.isPriceField(this.rule.field) ? this.rule.value : ''
-          ),
+          price: this.isPriceField(this.rule.field) ? this.rule.value : 0,
+          selectedRule: this.operatorReverseMap.get(this.rule.operator || '>'),
+          fieldValue: !this.isPriceField(this.rule.field)
+            ? this.rule.value
+            : '',
         });
       });
   }

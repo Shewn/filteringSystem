@@ -10,6 +10,7 @@
         <th>Field</th>
         <th>Operator</th>
         <th>Value</th>
+        <th style="width: 8rem"></th>
       </tr>
     </ng-template>
     <ng-template #body let-rule>
@@ -18,6 +19,21 @@
         <td>{{ rule.field }}</td>
         <td>{{ rule.operator }}</td>
         <td>{{ rule.value }}</td>
+        <td>
+          <p-button
+            icon="pi pi-pencil"
+            (click)="onEditClick(rule.rule_id)"
+            severity="secondary"
+            rounded
+            class="pencil-icon"
+          />
+          <p-button
+            icon="pi pi-trash"
+            (click)="onRemoveClick(rule.rule_id)"
+            severity="secondary"
+            rounded
+          />
+        </td>
       </tr>
     </ng-template>
   </p-table>
