@@ -5,7 +5,7 @@ import {
   modifyRule,
   removeRule,
   reloadData,
-} from './app/getData';
+} from './app/controller';
 import cors from 'cors';
 import { Rule } from '../schema';
 

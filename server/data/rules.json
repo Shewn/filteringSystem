@@ -1,37 +1,22 @@
 {
   "data": [
     {
-      "rule_id": 2,
+      "rule_id": 1,
       "field": "price",
       "operator": "<",
       "value": 150
     },
     {
-      "rule_id": 3,
+      "rule_id": 2,
       "field": "counterparty",
-      "operator": "equals",
-      "value": "Bank A"
+      "operator": "not_equals",
+      "value": "Global Markets Ltd"
     },
     {
-      "rule_id": 4,
+      "rule_id": 3,
       "field": "price",
-      "operator": "between",
-      "value": [
-        40,
-        200
-      ]
-    },
-    {
-      "rule_id": 5,
-      "field": "trade_number",
-      "operator": "equals",
-      "value": "1"
-    },
-    {
-      "rule_id": 6,
-      "field": "trade_number",
-      "operator": "equals",
-      "value": "2"
+      "operator": ">",
+      "value": 99
     }
   ]
 }

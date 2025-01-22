@@ -38,6 +38,7 @@ export const applyRule = (trade: Trade, rule: Rule): boolean => {
 
 // Filter trades based on rules
 export const filterTrades = (): Response => {
+  reloadData();
   const filteredTrades = trades.filter((trade) =>
     rules.every((rule) => applyRule(trade, rule))
   );
@@ -58,7 +59,10 @@ export const filterTrades = (): Response => {
 
 // Add a new rule
 export const addRule = (newRule: Rule): Response => {
-  const { rule_id } = rules[rules.length - 1];
+  let rule_id = 0;
+  if (rules.length > 0) {
+    rule_id = rules[rules.length - 1].rule_id;
+  }
   rules.push({ ...newRule, rule_id: rule_id + 1 });
   const updatedRules = JSON.stringify({ data: rules }, null, 2);
   fs.writeFile('data/rules.json', updatedRules, (writeErr) => {
@@ -90,6 +94,17 @@ export const modifyRule = (
     };
   }
   rules[ruleIndex] = { ...rules[ruleIndex], ...updatedRule };
+
+  const updatedRules = JSON.stringify({ data: rules }, null, 2);
+  fs.writeFile('data/rules.json', updatedRules, (writeErr) => {
+    if (writeErr) {
+      console.error('Error writing to the file:', writeErr);
+      return;
+    }
+    console.log('Data successfully appended to the JSON file.');
+  });
+
+  reloadData();
   return {
     success: true,
     message: `Rule with ID ${ruleId} updated successfully.`,
@@ -107,6 +122,16 @@ export const removeRule = (ruleId: number): Response => {
     };
   }
   rules.splice(ruleIndex, 1);
+  const updatedRules = JSON.stringify({ data: rules }, null, 2);
+  fs.writeFile('data/rules.json', updatedRules, (writeErr) => {
+    if (writeErr) {
+      console.error('Error writing to the file:', writeErr);
+      return;
+    }
+    console.log('Data successfully appended to the JSON file.');
+  });
+
+  reloadData();
   return {
     success: true,
     message: `Rule with ID ${ruleId} removed successfully.`,
