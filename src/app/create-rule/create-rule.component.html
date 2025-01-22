@@ -1,2 +1,57 @@
-<p>create-rule works!</p>
-<secondary-button></secondary-button>
+<div class="create-container">
+  <form
+    [formGroup]="newFormGroup"
+    (ngSubmit)="onSubmit()"
+    novalidate
+    class="input-group"
+  >
+    <p-inputgroup>
+      <p-floatlabel class="w-full md:w-56">
+        <p-select
+          inputId="over_label"
+          [options]="fieldOption"
+          styleClass="w-full"
+          formControlName="selectedField"
+          (onChange)="checkField($event)"
+        />
+        <label for="over_label">Select Field</label>
+      </p-floatlabel>
+    </p-inputgroup>
+
+    <p-inputgroup>
+      <p-floatlabel class="w-full md:w-56">
+        <p-select
+          inputId="over_label"
+          [options]="rulesOption"
+          styleClass="w-full"
+          formControlName="selectedRule"
+        />
+        <label for="over_label">Select rule</label>
+      </p-floatlabel>
+    </p-inputgroup>
+
+    <p-inputgroup *ngIf="showPriceField">
+      <p-inputgroup-addon>$</p-inputgroup-addon>
+      <p-inputnumber formControlName="price" placeholder="Price" />
+      <p-inputgroup-addon>.00</p-inputgroup-addon>
+    </p-inputgroup>
+
+    <p-inputgroup *ngIf="!showPriceField">
+      <p-inputgroup-addon>Value</p-inputgroup-addon>
+      <input
+        pInputText
+        formControlName="fieldValue"
+        placeholder="Field Value"
+      />
+    </p-inputgroup>
+
+    <button
+      class="submit-button"
+      pButton
+      type="submit"
+      [disabled]="!newFormGroup.valid"
+    >
+      Submit
+    </button>
+  </form>
+</div>

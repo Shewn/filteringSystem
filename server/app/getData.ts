@@ -58,14 +58,18 @@ export const filterTrades = (): Response => {
 
 // Add a new rule
 export const addRule = (newRule: Rule): Response => {
-  const exists = rules.find((rule) => rule.rule_id === newRule.rule_id);
-  if (exists) {
-    return {
-      success: false,
-      message: `Rule with ID ${newRule.rule_id} already exists.`,
-    };
-  }
-  rules.push(newRule);
+  const { rule_id } = rules[rules.length - 1];
+  rules.push({ ...newRule, rule_id: rule_id + 1 });
+  const updatedRules = JSON.stringify({ data: rules }, null, 2);
+  fs.writeFile('data/rules.json', updatedRules, (writeErr) => {
+    if (writeErr) {
+      console.error('Error writing to the file:', writeErr);
+      return;
+    }
+    console.log('Data successfully appended to the JSON file.');
+  });
+
+  reloadData();
   return {
     success: true,
     message: 'Rule added successfully.',

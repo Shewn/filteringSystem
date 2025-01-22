@@ -20,7 +20,7 @@ const port = 3000;
 
 // Middleware to parse JSON
 app.use(express.json());
-
+app.options('*', cors(corsOptions));
 // Reload data before starting the server
 reloadData();
 
@@ -31,7 +31,7 @@ app.get('/api/trades', cors(corsOptions), (req, res) => {
 });
 
 // Add a new rule
-app.post('/api/rules', (req, res) => {
+app.post('/api/rules', cors(corsOptions), (req, res) => {
   const newRule: Rule = req.body;
   const result = addRule(newRule);
   res.status(result.success ? 201 : 400).json(result);

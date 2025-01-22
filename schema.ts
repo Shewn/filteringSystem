@@ -1,7 +1,7 @@
 // Define Trade and Rule types with nullable fields
 
 export type Trade = {
-  trade_number: number | null;
+  trade_number: string | null;
   portfolio: string | null;
   counterparty: string | null;
   price: number | null;
