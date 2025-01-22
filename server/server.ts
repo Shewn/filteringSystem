@@ -5,6 +5,8 @@ import {
   modifyRule,
   removeRule,
   reloadData,
+  getRuleById,
+  getRules,
 } from './app/controller';
 import cors from 'cors';
 import { Rule } from '../schema';
@@ -20,13 +22,28 @@ const port = 3000;
 
 // Middleware to parse JSON
 app.use(express.json());
+// enable support for OPTIONS requests (PREFLIGHT REQUEST)
 app.options('*', cors(corsOptions));
+
 // Reload data before starting the server
 reloadData();
 
 // Get all filtered trades
 app.get('/api/trades', cors(corsOptions), (req, res) => {
   const result = filterTrades();
+  res.status(result.success ? 200 : 404).json(result);
+});
+
+// Get all available rules
+app.get('/api/rules', cors(corsOptions), (req, res) => {
+  const result = getRules();
+  res.status(result.success ? 200 : 404).json(result);
+});
+
+// Get rule by id
+app.get('/api/rule/:id', cors(corsOptions), (req, res) => {
+  const ruleId = parseInt(req.params.id);
+  const result = getRuleById(ruleId);
   res.status(result.success ? 200 : 404).json(result);
 });
 
@@ -38,7 +55,7 @@ app.post('/api/rules', cors(corsOptions), (req, res) => {
 });
 
 // Modify an existing rule
-app.put('/api/rules/:id', (req, res) => {
+app.put('/api/rules/:id', cors(corsOptions), (req, res) => {
   const ruleId = parseInt(req.params.id);
   const updatedRule: Partial<Rule> = req.body;
   const result = modifyRule(ruleId, updatedRule);
@@ -46,7 +63,7 @@ app.put('/api/rules/:id', (req, res) => {
 });
 
 // Delete a rule
-app.delete('/api/rules/:id', (req, res) => {
+app.delete('/api/rules/:id', cors(corsOptions), (req, res) => {
   const ruleId = parseInt(req.params.id);
   const result = removeRule(ruleId);
   res.status(result.success ? 200 : 404).json(result);

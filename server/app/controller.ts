@@ -114,6 +114,38 @@ export const modifyRule = (
   };
 };
 
+export const getRuleById = (ruleId: number): Response => {
+  const ruleIndex = rules.findIndex((rule) => rule.rule_id === ruleId);
+  if (ruleIndex === -1) {
+    return {
+      success: false,
+      message: `Rule with ID ${ruleId} not found.`,
+    };
+  }
+
+  return {
+    success: true,
+    message: `Rule with ID ${ruleId} retrieved successfully.`,
+    rules: [rules[ruleIndex]],
+  };
+};
+
+export const getRules = (): Response => {
+  reloadData();
+  if (rules.length === 0) {
+    return {
+      success: false,
+      message: 'No rules found.',
+    };
+  }
+
+  return {
+    success: true,
+    message: 'All rules retrieved successfully.',
+    rules,
+  };
+};
+
 // Remove a rule
 export const removeRule = (ruleId: number): Response => {
   const ruleIndex = rules.findIndex((rule) => rule.rule_id === ruleId);
