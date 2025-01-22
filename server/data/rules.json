@@ -2,21 +2,15 @@
   "data": [
     {
       "rule_id": 1,
-      "field": "price",
-      "operator": "<",
-      "value": 200000
+      "field": "trade_number",
+      "operator": "not_equals",
+      "value": "1004"
     },
     {
       "rule_id": 2,
       "field": "counterparty",
-      "operator": "not_equals",
-      "value": "Global Markets Ltd"
-    },
-    {
-      "rule_id": 3,
-      "field": "price",
-      "operator": ">",
-      "value": 99
+      "operator": "equals",
+      "value": "ABC Bank"
     }
   ]
 }

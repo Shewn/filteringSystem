@@ -1,4 +1,7 @@
 <div class="list-container">
+  <p-toast />
+  <p-confirmdialog />
+
   <p-table
     [value]="rules"
     [tableStyle]="{ 'max-width': '50rem', margin: 'auto' }"
@@ -29,7 +32,7 @@
           />
           <p-button
             icon="pi pi-trash"
-            (click)="onRemoveClick(rule.rule_id)"
+            (click)="onRemoveClick($event, rule.rule_id)"
             severity="secondary"
             rounded
           />
@@ -37,4 +40,7 @@
       </tr>
     </ng-template>
   </p-table>
+  <button class="create-button" pButton (click)="onCreateButtonClick()">
+    Create Rule
+  </button>
 </div>
