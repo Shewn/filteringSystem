@@ -94,7 +94,7 @@ export class CreateRuleComponent {
       rule_id: 1,
       field: getKeyMap(formValue.selectedField),
       operator: getOperator(formValue.selectedRule),
-      value: formValue.fieldValue,
+      value: formValue.fieldValue || formValue.price,
     };
   }
 
