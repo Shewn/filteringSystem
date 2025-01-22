@@ -70,7 +70,7 @@ export const addRule = (newRule: Rule): Response => {
       console.error('Error writing to the file:', writeErr);
       return;
     }
-    console.log('Data successfully appended to the JSON file.');
+    console.log('Data successfully appended to the JSON file on Adding Rule');
   });
 
   reloadData();
@@ -101,7 +101,9 @@ export const modifyRule = (
       console.error('Error writing to the file:', writeErr);
       return;
     }
-    console.log('Data successfully appended to the JSON file.');
+    console.log(
+      'Data successfully appended to the JSON file on Modifying Rule'
+    );
   });
 
   reloadData();
@@ -128,7 +130,7 @@ export const removeRule = (ruleId: number): Response => {
       console.error('Error writing to the file:', writeErr);
       return;
     }
-    console.log('Data successfully appended to the JSON file.');
+    console.log('Data successfully appended to the JSON file on Removing Rule');
   });
 
   reloadData();

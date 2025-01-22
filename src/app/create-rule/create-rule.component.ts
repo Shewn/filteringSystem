@@ -104,8 +104,6 @@ export class CreateRuleComponent {
     } else {
       this.newFormGroup.value.price = null;
     }
-    // console.warn(this.newFormGroup.value);
-    console.log(this.processInput(this.newFormGroup.value));
     this.http
       .post<any>(
         'http://localhost:3000/api/rules',
